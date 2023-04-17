@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="author" content="Oğuzhan Öztürk" />
+        <meta name="description" content="Testpine Task" />
+        <meta name="keywords" content="HTML, CSS, JavaScript" />
+        <title>Testpine Task</title>
+
+        <style>
+            body {
+                background-color: #f4f4f4;
+            }
+            .container {
+                display: flex;
+            }
+
+            .blocks-container {
+                background-color: white;
+                width: 20%;
+                order: 2;
+                text-align: right;
+            }
+
+            .block {
+                background-color: #36150400;
+                border: 1px solid #a60707;
+                cursor: move;
+                margin-bottom: 10px;
+                padding: 10px;
+                text-align: center;
+                border-radius: 5px;
+                order: 1;
+                transition-duration: 0.5s;
+            }
+
+            .block:hover {
+                background-color: #1abc9c;
+                color: white;
+            }
+
+            .form_container {
+                background-color: white;
+                border: 1px solid #ddd;
+                flex-grow: 1;
+                margin-left: 10px;
+                padding: 20px;
+                order: 2;
+            }
+
+            .form_row {
+                cursor: move;
+                align-items: center;
+                display: flex;
+                margin-bottom: 10px;
+            }
+
+            .form_element {
+                border: 1px black;
+                flex-grow: 1;
+                margin-right: 10px;
+            }
+
+            .delete-button {
+                background-color: #ff6b6b;
+                border: none;
+                color: #fff;
+                cursor: pointer;
+                margin-right: 10px;
+                padding: 5px 10px;
+                transition-duration: 0.5s;
+            }
+
+            .delete-button:hover {
+                background-color: #c11487;
+                color: white;
+            }
+
+            .element-background {
+                background-color: white;
+                border: 1px solid #541f06;
+            }
+
+            /* Sıralama için stil */
+            .dragging_over {
+                border-top: 1px dashed black;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="blocks-container">
+                <div class="block" draggable="true" data-type="a">Block A</div>
+                <div class="block" draggable="true" data-type="b">Block B</div>
+                <div class="block" draggable="true" data-type="c">Block C</div>
+                <div class="block" draggable="true" data-type="d">Block D</div>
+            </div>
+            <div class="form_container"></div>
+        </div>
+
+        <script>
+            const blocks = document.querySelectorAll(".block");
+            const formContainer = document.querySelector(".form_container");
+
+            // Add drag listeners to the blocks
+            blocks.forEach((block) => {
+                block.addEventListener("dragstart", (event) => {
+                    // Get the data type of the dragged block
+                    const dataType = event.target.getAttribute("data-type");
+
+                    block.classList.add("dragging");
+                    event.dataTransfer.setData("text/plain", dataType);
+                });
+
+                block.addEventListener("dragend", () => {
+                    block.classList.remove("dragging");
+                });
+            });
+
+            formContainer.addEventListener("dragover", (event) => {
+                event.preventDefault();
+
+                const formRows = document.querySelectorAll(".form_row");
+
+                formRows.forEach((row) => {
+                    row.classList.remove("dragging_over");
+                });
+
+                const mouseY = event.clientY;
+                const rect = formContainer.getBoundingClientRect();
+                const threshold = rect.top + rect.height / 2;
+
+                if (mouseY < threshold) {
+                    formContainer.classList.add("dragging_over");
+                } else {
+                    formContainer.classList.remove("dragging_over");
+                }
+            });
+
+            formContainer.addEventListener("drop", (event) => {
+                event.preventDefault();
+
+                const dataType = event.dataTransfer.getData("text/plain");
+
+                const newFormElement = createBlockElement(dataType);
+                formContainer.appendChild(newFormElement);
+
+                const formRows = document.querySelectorAll(".form_row");
+
+                formRows.forEach((row) => {
+                    row.style.order = parseInt(row.getAttribute("data-order"));
+                });
+            });
+
+            // Sıralamanın işlevi
+            formContainer.addEventListener("dragstart", (event) => {
+                const targetRow = event.target.closest(".form_row");
+
+                if (!targetRow) return;
+
+                const order = targetRow.style.order;
+
+                event.dataTransfer.setData("text/plain", order);
+                event.currentTarget.classList.add("dragging");
+            });
+
+            formContainer.addEventListener("dragover", (event) => {
+                event.preventDefault();
+
+                const targetRow = event.target.closest(".form_row");
+
+                if (!targetRow || targetRow === event.currentTarget) return;
+
+                const mouseY = event.clientY;
+                const rect = targetRow.getBoundingClientRect();
+                const threshold = rect.top + rect.height / 2;
+
+                targetRow.classList.remove("dragging_over");
+
+                if (mouseY < threshold) {
+                    targetRow.classList.add("dragging_over");
+                } else {
+                    targetRow.classList.remove("dragging_over");
+                }
+            });
+
+            formContainer.addEventListener("drop", (event) => {
+                event.preventDefault();
+
+                const order1 = event.dataTransfer.getData("text/plain");
+                const targetRow = event.target.closest(".form_row");
+                const order2 = targetRow.style.order;
+                targetRow.style.order = order1;
+
+                const draggableRows = document.querySelectorAll(".form_row.dragging");
+
+                draggableRows.forEach((row) => {
+                    if (row === targetRow) return;
+
+                    const order = row.style.order;
+                    const parsedOrder = parseInt(order);
+
+                    if (
+                        (order1 < order2 && parsedOrder >= order1 && parsedOrder <= order2) ||
+                        (order1 > order2 && parsedOrder <= order1 && parsedOrder >= order2)
+                    ) {
+                        if (order1 < order2) {
+                            row.style.order = parsedOrder + 1;
+                        } else {
+                            row.style.order = parsedOrder - 1;
+                        }
+                    }
+                });
+
+                const formRows = document.querySelectorAll(".form_row");
+
+                formRows.forEach((row) => {
+                    row.setAttribute("data-order", row.style.order);
+                });
+            });
+
+            function createBlockElement(type) {
+                let element;
+                let label;
+
+                switch (type) {
+                    case "a":
+                        element = document.createElement("div");
+                        element.innerHTML = '<input class="element-background" type="text">';
+
+                        label = document.createTextNode("Block A: ");
+                        break;
+                    case "b":
+                        element = document.createElement("div");
+                        element.innerHTML =
+                            '<input class="element-background" type="text" ><br><br><input class="element-background"type="text">';
+
+                        label = document.createTextNode("Block B: ");
+                        break;
+                    case "c":
+                        element = document.createElement("div");
+                        element.innerHTML =
+                            '<textarea class="element-background" type="text" rows="5" cols="180" >';
+
+                        label = document.createTextNode("Block C: ");
+                        break;
+                    case "d":
+                        element = document.createElement("div");
+                        element.innerHTML = '<select><option>Option 1</option><option>Option 2</option><option>Option 3</option></select>';
+
+                        label = document.createTextNode("Block D: ");
+                        break;
+                    default:
+                        return null;
+                }
+
+                const formRow = document.createElement("div");
+                formRow.classList.add("form_row");
+                formRow.appendChild(label);
+                formRow.setAttribute("draggable", true);
+                formRow.setAttribute("data-order", "-1");
+
+                element.classList.add("form_element");
+                formRow.appendChild(element);
+
+                const deleteButton = document.createElement("button");
+                deleteButton.classList.add("delete-button");
+                deleteButton.innerText = "Delete";
+
+                deleteButton.addEventListener("click", () => {
+                    formContainer.removeChild(formRow);
+                });
+
+                formRow.appendChild(deleteButton);
+
+                return formRow;
+            }
+        </script>
+    </body>
+</html>
