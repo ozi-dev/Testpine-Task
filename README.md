@@ -28,7 +28,7 @@ To run Testpine Task, you need a modern web browser such as Google Chrome or Moz
 
 To install Testpine Task, follow these steps:
 
-1. Clone this repository to your local machine using `git clone https://github.com/<USERNAME>/testpine-task.git`
+1. Clone this repository to your local machine using `git clone https://github.com/ozi-dev/testpine-task.git`
 2. Navigate to the project directory using `cd testpine-task`
 3. Open the `Testpine_Task.html` file in your preferred browser.
 
