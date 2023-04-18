@@ -13,14 +13,43 @@
         }
 
         .block {
-            background-color: #ccc;
-            border: 1px solid #333;
-            border-radius: 5px;
-            padding: 10px;
-            margin: 10px;
-            display: inline-block;
-            cursor: move;
+            border-radius: 4px;
+            background-color: #60ccaf;
+            border: none;
+            color: #FFFFFF;
+            text-align: center;
+            font-size: 20px;
+            padding: 13px;
+            width: 200px;
+            transition: all 0.5s;
+            cursor: pointer;
+            margin: 5px;
 
+        }
+
+        .block span {
+            cursor: pointer;
+            display: inline-block;
+            position: relative;
+            transition: 0.5s;
+        }
+
+        .block span:after {
+            content: '\00bb';
+            position: absolute;
+            opacity: 0;
+            top: 0;
+            right: -20px;
+            transition: 0.5s;
+        }
+
+        .block:hover span {
+            padding-right: 25px;
+        }
+
+        .block:hover span:after {
+            opacity: 1;
+            right: 0;
         }
 
         .workspace {
@@ -56,22 +85,26 @@
 <body>
     <br>
     <div class="header">
-        <img class="center" src="https://www.testpine.com/wp-content/uploads/2021/12/logo.png" alt="">
+        <a href="https://www.testpine.com"><img class="center"src="https://www.testpine.com/wp-content/uploads/2021/12/logo.png" alt="Testpine Logo" ></a>
     </div>
     <br><br>
     <div class="workspace" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
 
     <div class="block-container">
-        <div class="block" id="blocka" draggable="true" data-type="a" ondragstart="drag(event)">Block A</div>
-        <div class="block" id="blockb" draggable="true" data-type="b" ondragstart="drag(event)">Block B</div>
-        <div class="block" id="blockc" draggable="true" data-type="c" ondragstart="drag(event)">Block C</div>
-        <div class="block" id="blockd" draggable="true" data-type="d" ondragstart="drag(event)">Block D</div>
+        <div class="block" id="blocka" draggable="true" data-type="a" ondragstart="drag(event)"><span>Block A </span>
+        </div>
+        <div class="block" id="blockb" draggable="true" data-type="b" ondragstart="drag(event)"><span>Block B </span>
+        </div>
+        <div class="block" id="blockc" draggable="true" data-type="c" ondragstart="drag(event)"><span>Block C </span>
+        </div>
+        <div class="block" id="blockd" draggable="true" data-type="d" ondragstart="drag(event)"><span>Block D </span>
+        </div>
     </div>
 
     <script>
         const workspace = document.querySelector('.workspace');
         const blockContainer = document.querySelector('.block-container');
-        
+
 
         function allowDrop(event) {
             event.preventDefault();
@@ -104,6 +137,7 @@
 
             return formElement;
         }
+
         function drop(event) {
             event.preventDefault();
 
@@ -122,7 +156,7 @@
             const y = event.clientY - rect.top;
             newBlock.style.position = 'absolute';
             newBlock.style.left = x + 'px';
-            newBlock.style.top  = y  + 'px';
+            newBlock.style.top = y + 'px';
             newBlock.id = 'block-' + Date.now();
             newBlock.setAttribute('data-type', block.getAttribute('data-type'));
 
