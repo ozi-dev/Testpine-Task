@@ -38,21 +38,6 @@ Alternatively, you can simply download the ZIP file of the repository, extract t
 
 Using Testpine Task is easy. Simply drag any of the pre-defined blocks from the left-hand menu and drop them onto the workspace on the right. Then, click on the block to add form elements to it. You can customize each form element by adding or removing fields from within the block's settings. As you make changes, the results will be displayed in real-time on the workspace.
 
-## Contributing
-
-We welcome contributions to Testpine Task in any form, including bug reports, feature requests, and pull requests. To contribute, please follow these steps:
-
-1. Fork this repository to your own account.
-2. Create a new branch for your changes.
-3. Make your changes and commit them to your branch.
-4. Open a pull request to merge your changes into the main branch.
-
-## Authors
-
-* **Oğuzhan Öztürk**  
-
-
-
 ## Acknowledgements
 
 * This project was a intern task from [Testpine](https://www.testpine.com).
