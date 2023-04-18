@@ -40,4 +40,4 @@ Using Testpine Task is easy. Simply drag any of the pre-defined blocks from the 
 
 ## Acknowledgements
 
-* This project was a intern task from [Testpine](https://www.testpine.com).
+* This project was a intern task for [Testpine](https://www.testpine.com).
