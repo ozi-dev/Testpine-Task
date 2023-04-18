@@ -1,17 +1,18 @@
 # Testpine Task
 
-Testpine Task is a simple, yet powerful web application that allows users to drag and drop blocks of content onto a workspace, add form elements to them and then save and display the results. The tool was developed using HTML, CSS and JavaScript.
+Testpine Task is  simple web application that allows users to drag and drop blocks of content onto a workspace, add form elements to them and then save and display the results. The tool was developed using **HTML, CSS and JavaScript**.
 
 ## Demo
 
 Here's a quick demo of how Testpine Task works:
 
-![Testpine Task Demo](https://media.giphy.com/media/ivRwJjJeT670eAOc2Q/giphy.gif)
+![Testpine Task Demo](https://cdn.discordapp.com/attachments/793214764523585536/1097861129293803540/Testpine_task_Clipchamp_ile_yapld.gif)
 
 ## Features
 
 
 * **Drag-and-drop functionality:** Users can easily drag and drop blocks of content onto the workspace to create custom forms.
+* **Click functionality:** Users can easily click onto blocks of content onto the workspace to create custom forms.
 * **Form element customization:** Each block type has a unique set of form elements that can be customized to fit the user's needs. Users can add text inputs, dropdown menus and more.
 * **Real-time updates:** As users add form elements, the workspace dynamically updates to reflect those changes in real-time.
 * **Re-positioning:** Users can reposition blocks on the workspace by clicking and dragging them around.
