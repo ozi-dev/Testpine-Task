@@ -1,6 +1,6 @@
 # Testpine Task
 
-Testpine Task is a simple, yet powerful web application that allows users to drag and drop blocks of content onto a workspace, add form elements to them and then save and display the results. The tool was developed using HTML, CSS and JavaScript.
+Testpine Task is  simple web application that allows users to drag and drop blocks of content onto a workspace, add form elements to them and then save and display the results. The tool was developed using **HTML, CSS and JavaScript**.
 
 ## Demo
 
